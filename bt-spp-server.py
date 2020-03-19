@@ -1,21 +1,15 @@
-#-------------------------------------------------------------------------------
-# Name:        rfcomm-server-sdp.py
-# Purpose:
-#
-# Author:      HenkA
-#
-# Created:     28/10/2017
-# Copyright:   (c) HenkA 2017
-# Licence:     <your licence>
+# -------------------------------------------------------------------------------
+# Name:        bt-spp-server.py
+# Purpose:     Bluetooth Serial Port Profile server.
 #
 # Original source: https://github.com/karulis/pybluez/blob/master/examples/simple/rfcomm-server.py
 # pyperclip: https://github.com/asweigart/pyperclip
 # pyautogui:
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 # Global imports
-import sys
-import re
+# import sys
+# import re
 from ConfigParser import SafeConfigParser
 
 # 3rd party imports
@@ -23,8 +17,9 @@ from bluetooth import *
 import pyautogui
 import pyperclip
 
+
 def init_bt_server():
-    """ Intialize the Blutooth SPP server
+    """Intialize the Blutooth SPP server
 
     :return: server socket and port
     """
@@ -43,7 +38,7 @@ def init_bt_server():
                       service_id=uuid,
                       service_classes=[uuid, SERIAL_PORT_CLASS],
                       profiles=[SERIAL_PORT_PROFILE],
-    #                 protocols=[OBEX_UUID]
+                      # protocols=[OBEX_UUID]
                       )
     return server_sock, port
 
@@ -59,6 +54,7 @@ def wait_for_connection(server_sock, port):
     client_sock, client_info = server_sock.accept()
     print("Accepted connection from ", client_info)
     return client_sock
+
 
 def get_data(client_sock):
     """Get data from client socket
@@ -91,6 +87,7 @@ def stop_server(client_sock, server_sock):
     server_sock.close()
     print "server stopped"
     return
+
 
 def wedge_by_typewriter(data):
     """Send the given data through pyautogui typewriter
@@ -147,13 +144,11 @@ def main():
     print 'prefix=%s' % barcode_prefix
     print 'suffix=%s' % barcode_suffix
 
-    regex = None
-    regex_pattern = parser.get('barcode', 'regex_pattern')
-    regex_replacement = parser.get('barcode', 'regex_replacement')
-
-    #if regular_expression:
-    #    regex = re.compile(regular_expression)
-
+    # regex = None
+    # regex_pattern = parser.get('barcode', 'regex_pattern')
+    # regex_replacement = parser.get('barcode', 'regex_replacement')
+    # if regex_pattern:
+    #    regex = re.compile(regex_pattern)
 
     server_sock, port = init_bt_server()
 
@@ -173,8 +168,8 @@ def main():
             if barcode_suffix:
                 s = s + barcode_suffix
                 print 'After suffix: data = %s' % s
-            if regex_pattern and regex_replacement:
-                print 'regular expression result: %s' % re.sub(regex_pattern, regex_replacement, s)
+            # if regex_pattern and regex_replacement:
+            #     print 'regular expression result: %s' % re.sub(regex_pattern, regex_replacement, s)
 
             if use_typewriter:
                 wedge_by_typewriter(s)
