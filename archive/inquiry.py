@@ -14,8 +14,8 @@ nearby_devices = bluetooth.discover_devices(
 
 print("found %d devices" % len(nearby_devices))
 
-for addr, name in nearby_devices:
+for address, name in nearby_devices:
     try:
-        print("  %s - %s" % (addr, name))
+        print("  %s - %s" % (address, name))
     except UnicodeEncodeError:
-        print("  %s - %s" % (addr, name.encode('utf-8', 'replace')))
+        print("  %s - %s" % (address, name.encode('utf-8', 'replace')))
